@@ -1,18 +1,18 @@
 ﻿@model ExpressBookerProject.Models.driver
 
 @{
-    ViewBag.Title = "DeleteDriver";
+    ViewBag.Title = "Delete Driver";
 }
 @Html.Raw(TempData["Message"])
-<h2>DeleteDriver</h2>
+<h2>Delete Driver</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are You Sure You Want to Delete This Driver?</h3>
 <div>
-    <h4>driver</h4>
+    <h4>Driver Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.LabelFor(model => model.name, "Name")
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.licensenumber)
+            @Html.LabelFor(model => model.licensenumber, "License Number")
         </dt>
 
         <dd>
@@ -28,13 +28,12 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.phone)
+            @Html.LabelFor(model => model.phone, "Phone")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.phone)
         </dd>
-
     </dl>
 
     @using (Html.BeginForm())
@@ -42,8 +41,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete Driver" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to Driver List", "ViewDriver")
         </div>
     }
 </div>

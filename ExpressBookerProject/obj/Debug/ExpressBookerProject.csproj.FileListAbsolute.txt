@@ -76,8 +76,8 @@ C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\bin\Syste
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\bin\Newtonsoft.Json.xml
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\bin\Antlr3.Runtime.pdb
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.csproj.AssemblyReference.cache
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.csproj.CoreCompileInputs.cache
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.csproj.CopyComplete
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.dll
 C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.pdb
+C:\Users\Chucks\source\repos\ExpressBookerProject\ExpressBookerProject\obj\Debug\ExpressBookerProject.csproj.AssemblyReference.cache

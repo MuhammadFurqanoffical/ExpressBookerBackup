@@ -34,6 +34,7 @@
             @Html.LabelFor(model => model.departuretime, "Departure Time", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="datetime-local" id="departuretime" name="departuretime" class="form-control" required />
+                <small class="form-text text-muted">Select the date, and then enter the time in 24-hour format (HH:mm) or 12-hour format (HH:mm AM/PM).</small>
                 @Html.ValidationMessageFor(model => model.departuretime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,6 +43,7 @@
             @Html.LabelFor(model => model.arrivaltime, "Arrival Time", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="datetime-local" id="arrivaltime" name="arrivaltime" class="form-control" required />
+                <small class="form-text text-muted">Select the date, and then enter the time in 24-hour format (HH:mm) or 12-hour format (HH:mm AM/PM).</small>
                 @Html.ValidationMessageFor(model => model.arrivaltime, "", new { @class = "text-danger" })
             </div>
         </div>

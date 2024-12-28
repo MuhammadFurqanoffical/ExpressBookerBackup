@@ -1,18 +1,18 @@
 ﻿@model ExpressBookerProject.Models.bus
 
 @{
-    ViewBag.Title = "DeleteBus";
+    ViewBag.Title = "Delete Bus";
 }
 @Html.Raw(TempData["Message"])
-<h2>DeleteBus</h2>
+<h2>Delete Bus</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are You Sure You Want to Delete This Bus?</h3>
 <div>
-    <h4>bus</h4>
+    <h4>Bus Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.busnumber)
+            @Html.LabelFor(model => model.busnumber, "Bus Number")
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.capacity)
+            @Html.LabelFor(model => model.capacity, "Capacity")
         </dt>
 
         <dd>
@@ -28,13 +28,12 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.driver.name)
+            @Html.LabelFor(model => model.driver.name, "Driver Name")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.driver.name)
         </dd>
-
     </dl>
 
     @using (Html.BeginForm())
@@ -42,8 +41,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "ViewBus")
+            <input type="submit" value="Delete Bus" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to Bus List", "ViewBus")
         </div>
     }
 </div>
