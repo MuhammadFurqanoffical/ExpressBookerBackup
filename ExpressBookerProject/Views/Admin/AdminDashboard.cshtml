@@ -1,0 +1,90 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <div style="margin-bottom: 20px;"></div>
+        </div>
+        <div class="col-md-6 text-right">
+            <h2 style="margin-top: 20px;"></h2> 
+            <a href="@Url.Action("Logout", "Account")" class="btn btn-primary">Logout</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Manage Buses</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("AddBus", "Admin")">Add Bus</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("ViewBus", "Admin")">View and Delete Buses</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Manage Routes</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("AddRoute", "Admin")">Add Route</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("ViewRoute", "Admin")">View and Delete Routes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Manage Bus Schedules</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("AddBusSchedule", "Admin")">Add Bus Schedule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("ViewBusSchedule", "Admin")">View and Edit Bus Schedules</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Manage Drivers</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("AddDriver", "Admin")">Add Driver</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("ViewDriver", "Admin")">View Drivers</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">View Bookings</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("ViewBookings", "Admin")">View Bookings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

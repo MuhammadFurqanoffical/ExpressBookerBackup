@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ExpressBookerProject.Models.driver>
+
+@{
+    ViewBag.Title = "View Driver";
+}
+@Html.Raw(TempData["Message"])
+<h2>View Driver</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Driver Name
+            </th>
+            <th>
+                License Number
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.licensenumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditDriver", new { id = item.driverid }) |
+                    @Html.ActionLink("Delete", "DeleteDriver", new { id = item.driverid })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to Admin Dashboard", "AdminDashboard", "Admin")

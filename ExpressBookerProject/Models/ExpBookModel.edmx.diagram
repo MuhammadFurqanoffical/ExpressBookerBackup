@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="554d8c447a5747149872c7e1b6b7a0e1" Name="Diagram1">
+        <EntityTypeShape EntityType="expressbookerModel.booking" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.bus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.busschedule" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.driver" Width="1.5" PointX="1.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.feedback" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.payment" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.role" Width="1.5" PointX="1.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.route" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.sysdiagram" Width="1.5" PointX="2.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="expressbookerModel.user" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <AssociationConnector Association="expressbookerModel.FK__bookings__busid__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__bookings__routei__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__bookings__userid__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__feedback__bookin__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__payments__bookin__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__buses__driverid__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__busschedu__busid__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__busschedu__route__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__feedback__userid__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="expressbookerModel.FK__users__roleid__4D94879B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

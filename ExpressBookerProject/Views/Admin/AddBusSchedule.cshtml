@@ -1,0 +1,59 @@
+﻿@model ExpressBookerProject.Models.busschedule
+
+@{
+    ViewBag.Title = "Add Bus Schedule";
+}
+@Html.Raw(TempData["Message"])
+<h2>Add Bus Schedule</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Bus Schedule Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.busid, "Bus", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.busid, (SelectList)ViewBag.BusList, "Select Bus", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.busid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.routeid, "Route", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.routeid, (SelectList)ViewBag.RouteList, "Select Route", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.routeid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.departuretime, "Departure Time", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="datetime-local" id="departuretime" name="departuretime" class="form-control" required />
+                @Html.ValidationMessageFor(model => model.departuretime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.arrivaltime, "Arrival Time", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="datetime-local" id="arrivaltime" name="arrivaltime" class="form-control" required />
+                @Html.ValidationMessageFor(model => model.arrivaltime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "AdminDashboard")
+</div>

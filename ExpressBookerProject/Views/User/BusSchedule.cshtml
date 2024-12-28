@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ExpressBookerProject.Models.busschedule>
+
+@{
+    ViewBag.Title = "Bus Schedule";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Bus Schedule</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+            <th>Bus Number</th>
+            <th>Route</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.departuretime)</td>
+                <td>@Html.DisplayFor(modelItem => item.arrivaltime)</td>
+                <td>@Html.DisplayFor(modelItem => item.bus.busnumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.route.source) - @Html.DisplayFor(modelItem => item.route.destination)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>
+                    @Html.ActionLink("Book Seats", "BookSeats", new { id = item.scheduleid })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

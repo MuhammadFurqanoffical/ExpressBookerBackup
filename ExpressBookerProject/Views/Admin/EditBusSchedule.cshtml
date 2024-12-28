@@ -1,0 +1,69 @@
+﻿@model ExpressBookerProject.Models.busschedule
+
+@{
+    ViewBag.Title = "Edit Bus Schedule";
+}
+
+@Html.Raw(TempData["Message"])
+
+<h2>Edit Bus Schedule</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Bus Schedule</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.scheduleid)
+
+    <!-- Bus Dropdown -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.busid, "Bus", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.busid, (SelectList)ViewBag.BusList, "Select Bus", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.busid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Route Dropdown -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.routeid, "Route", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.routeid, (SelectList)ViewBag.RouteList, "Select Route", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.routeid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Departure Time -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.departuretime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.departuretime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.departuretime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Arrival Time -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.arrivaltime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.arrivaltime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.arrivaltime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ViewBusSchedule", null, new { @class = "btn btn-secondary" })
+</div>

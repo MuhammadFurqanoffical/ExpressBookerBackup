@@ -1,0 +1,27 @@
+﻿@model ExpressBookerProject.Models.busschedule
+
+@{
+    ViewBag.Title = "Book Seats";
+}
+
+<h2>Book Seats</h2>
+
+<p>Bus Number: @Model.bus.busnumber</p>
+<p>Departure Time: @Model.departuretime</p>
+<p>Arrival Time: @Model.arrivaltime</p>
+<p>Source: @Model.route.source</p>
+<p>Destination: @Model.route.destination</p>
+
+@using (Html.BeginForm("ConfirmBooking", "User", FormMethod.Post))
+{
+    <label for="numSeats">Number of Seats:</label>
+    <select id="numSeats" name="numSeats" required>
+        @for (int i = 1; i <= ViewBag.AvailableSeats; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+
+    <input type="hidden" name="scheduleId" value="@Model.scheduleid" />
+    <input type="submit" value="Confirm Booking" />
+}

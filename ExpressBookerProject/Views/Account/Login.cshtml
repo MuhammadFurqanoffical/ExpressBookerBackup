@@ -1,0 +1,33 @@
+﻿@model ExpressBookerProject.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Admin Login";
+}
+
+<h2>Admin Login</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Username)
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </div>
+
+    @* Check for the ViewBag.AdminLoginNotification and display if exists *@
+    if (ViewBag.AdminLoginNotification != null)
+    {
+        <div class="alert alert-warning">
+            @ViewBag.AdminLoginNotification
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Login</button>
+}
+

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ExpressBookerProject.Models.route>
+
+@{
+    ViewBag.Title = "View Route";
+}
+@Html.Raw(TempData["Message"])
+<h2>View Route</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Source
+            </th>
+            <th>
+                Destination
+            </th>
+            <th>
+                Distance (in km)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.source)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.distance)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditRoute", new { id = item.routeid }) |
+                    @Html.ActionLink("Delete", "DeleteRoute", new { id = item.routeid })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to Admin Dashboard", "AdminDashboard", "Admin")

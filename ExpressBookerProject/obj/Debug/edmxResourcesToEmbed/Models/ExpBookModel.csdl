@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="expressbookerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="booking">
+    <Key>
+      <PropertyRef Name="bookingid" />
+    </Key>
+    <Property Name="bookingid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="busid" Type="Int32" Nullable="false" />
+    <Property Name="routeid" Type="Int32" Nullable="false" />
+    <Property Name="bookingdate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="seatnumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="bus" Relationship="Self.FK__bookings__busid__59FA5E80" FromRole="bookings" ToRole="buses" />
+    <NavigationProperty Name="route" Relationship="Self.FK__bookings__routei__5AEE82B9" FromRole="bookings" ToRole="routes" />
+    <NavigationProperty Name="user" Relationship="Self.FK__bookings__userid__59063A47" FromRole="bookings" ToRole="users" />
+    <NavigationProperty Name="feedbacks" Relationship="Self.FK__feedback__bookin__656C112C" FromRole="bookings" ToRole="feedback" />
+    <NavigationProperty Name="payments" Relationship="Self.FK__payments__bookin__619B8048" FromRole="bookings" ToRole="payments" />
+  </EntityType>
+  <EntityType Name="bus">
+    <Key>
+      <PropertyRef Name="busid" />
+    </Key>
+    <Property Name="busid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="busnumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="capacity" Type="Int32" Nullable="false" />
+    <Property Name="driverid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="bookings" Relationship="Self.FK__bookings__busid__59FA5E80" FromRole="buses" ToRole="bookings" />
+    <NavigationProperty Name="driver" Relationship="Self.FK__buses__driverid__5441852A" FromRole="buses" ToRole="drivers" />
+    <NavigationProperty Name="busschedules" Relationship="Self.FK__busschedu__busid__5DCAEF64" FromRole="buses" ToRole="busschedules" />
+  </EntityType>
+  <EntityType Name="busschedule">
+    <Key>
+      <PropertyRef Name="scheduleid" />
+    </Key>
+    <Property Name="scheduleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="busid" Type="Int32" Nullable="false" />
+    <Property Name="routeid" Type="Int32" Nullable="false" />
+    <Property Name="departuretime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="arrivaltime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="bus" Relationship="Self.FK__busschedu__busid__5DCAEF64" FromRole="busschedules" ToRole="buses" />
+    <NavigationProperty Name="route" Relationship="Self.FK__busschedu__route__5EBF139D" FromRole="busschedules" ToRole="routes" />
+  </EntityType>
+  <EntityType Name="driver">
+    <Key>
+      <PropertyRef Name="driverid" />
+    </Key>
+    <Property Name="driverid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="licensenumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="buses" Relationship="Self.FK__buses__driverid__5441852A" FromRole="drivers" ToRole="buses" />
+  </EntityType>
+  <EntityType Name="feedback">
+    <Key>
+      <PropertyRef Name="feedbackid" />
+    </Key>
+    <Property Name="feedbackid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bookingid" Type="Int32" Nullable="false" />
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="rating" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="booking" Relationship="Self.FK__feedback__bookin__656C112C" FromRole="feedback" ToRole="bookings" />
+    <NavigationProperty Name="user" Relationship="Self.FK__feedback__userid__66603565" FromRole="feedback" ToRole="users" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="paymentid" />
+    </Key>
+    <Property Name="paymentid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bookingid" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="paymentdate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="paymentmethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="booking" Relationship="Self.FK__payments__bookin__619B8048" FromRole="payments" ToRole="bookings" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="roleid" />
+    </Key>
+    <Property Name="roleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rolename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="users" Relationship="Self.FK__users__roleid__4D94879B" FromRole="roles" ToRole="users" />
+  </EntityType>
+  <EntityType Name="route">
+    <Key>
+      <PropertyRef Name="routeid" />
+    </Key>
+    <Property Name="routeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="source" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="destination" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="distance" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <NavigationProperty Name="bookings" Relationship="Self.FK__bookings__routei__5AEE82B9" FromRole="routes" ToRole="bookings" />
+    <NavigationProperty Name="busschedules" Relationship="Self.FK__busschedu__route__5EBF139D" FromRole="routes" ToRole="busschedules" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="roleid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="bookings" Relationship="Self.FK__bookings__userid__59063A47" FromRole="users" ToRole="bookings" />
+    <NavigationProperty Name="feedbacks" Relationship="Self.FK__feedback__userid__66603565" FromRole="users" ToRole="feedback" />
+    <NavigationProperty Name="role" Relationship="Self.FK__users__roleid__4D94879B" FromRole="users" ToRole="roles" />
+  </EntityType>
+  <Association Name="FK__bookings__busid__59FA5E80">
+    <End Role="buses" Type="Self.bus" Multiplicity="1" />
+    <End Role="bookings" Type="Self.booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="buses">
+        <PropertyRef Name="busid" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="busid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bookings__routei__5AEE82B9">
+    <End Role="routes" Type="Self.route" Multiplicity="1" />
+    <End Role="bookings" Type="Self.booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="routes">
+        <PropertyRef Name="routeid" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="routeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bookings__userid__59063A47">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="bookings" Type="Self.booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__feedback__bookin__656C112C">
+    <End Role="bookings" Type="Self.booking" Multiplicity="1" />
+    <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="bookingid" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="bookingid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__payments__bookin__619B8048">
+    <End Role="bookings" Type="Self.booking" Multiplicity="1" />
+    <End Role="payments" Type="Self.payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="bookingid" />
+      </Principal>
+      <Dependent Role="payments">
+        <PropertyRef Name="bookingid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__buses__driverid__5441852A">
+    <End Role="drivers" Type="Self.driver" Multiplicity="1" />
+    <End Role="buses" Type="Self.bus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="drivers">
+        <PropertyRef Name="driverid" />
+      </Principal>
+      <Dependent Role="buses">
+        <PropertyRef Name="driverid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__busschedu__busid__5DCAEF64">
+    <End Role="buses" Type="Self.bus" Multiplicity="1" />
+    <End Role="busschedules" Type="Self.busschedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="buses">
+        <PropertyRef Name="busid" />
+      </Principal>
+      <Dependent Role="busschedules">
+        <PropertyRef Name="busid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__busschedu__route__5EBF139D">
+    <End Role="routes" Type="Self.route" Multiplicity="1" />
+    <End Role="busschedules" Type="Self.busschedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="routes">
+        <PropertyRef Name="routeid" />
+      </Principal>
+      <Dependent Role="busschedules">
+        <PropertyRef Name="routeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__feedback__userid__66603565">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__users__roleid__4D94879B">
+    <End Role="roles" Type="Self.role" Multiplicity="1" />
+    <End Role="users" Type="Self.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roles">
+        <PropertyRef Name="roleid" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="roleid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="expressbookerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="bookings" EntityType="Self.booking" />
+    <EntitySet Name="buses" EntityType="Self.bus" />
+    <EntitySet Name="busschedules" EntityType="Self.busschedule" />
+    <EntitySet Name="drivers" EntityType="Self.driver" />
+    <EntitySet Name="feedbacks" EntityType="Self.feedback" />
+    <EntitySet Name="payments" EntityType="Self.payment" />
+    <EntitySet Name="roles" EntityType="Self.role" />
+    <EntitySet Name="routes" EntityType="Self.route" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK__bookings__busid__59FA5E80" Association="Self.FK__bookings__busid__59FA5E80">
+      <End Role="buses" EntitySet="buses" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bookings__routei__5AEE82B9" Association="Self.FK__bookings__routei__5AEE82B9">
+      <End Role="routes" EntitySet="routes" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bookings__userid__59063A47" Association="Self.FK__bookings__userid__59063A47">
+      <End Role="users" EntitySet="users" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__feedback__bookin__656C112C" Association="Self.FK__feedback__bookin__656C112C">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__payments__bookin__619B8048" Association="Self.FK__payments__bookin__619B8048">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="payments" EntitySet="payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__buses__driverid__5441852A" Association="Self.FK__buses__driverid__5441852A">
+      <End Role="drivers" EntitySet="drivers" />
+      <End Role="buses" EntitySet="buses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__busschedu__busid__5DCAEF64" Association="Self.FK__busschedu__busid__5DCAEF64">
+      <End Role="buses" EntitySet="buses" />
+      <End Role="busschedules" EntitySet="busschedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__busschedu__route__5EBF139D" Association="Self.FK__busschedu__route__5EBF139D">
+      <End Role="routes" EntitySet="routes" />
+      <End Role="busschedules" EntitySet="busschedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__feedback__userid__66603565" Association="Self.FK__feedback__userid__66603565">
+      <End Role="users" EntitySet="users" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__users__roleid__4D94879B" Association="Self.FK__users__roleid__4D94879B">
+      <End Role="roles" EntitySet="roles" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

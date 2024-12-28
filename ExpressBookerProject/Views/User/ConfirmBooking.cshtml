@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Confirm Booking";
+}
+
+<h2>Confirm Booking</h2>
+
+<p>Bus Number: @ViewBag.BusNumber</p>
+<p>Departure Time: @ViewBag.DepartureTime</p>
+<p>Arrival Time: @ViewBag.ArrivalTime</p>
+<p>Source: @ViewBag.Source</p>
+<p>Destination: @ViewBag.Destination</p>
+<p>Number of Seats: @ViewBag.NumSeats</p>
+<p>Total Price: @ViewBag.TotalPrice</p>
+
+@using (Html.BeginForm("ConfirmBooking", "User", FormMethod.Post))
+{
+    <input type="hidden" name="scheduleId" value="@ViewBag.ScheduleId" />
+    <input type="hidden" name="numSeats" value="@ViewBag.NumSeats" />
+    <input type="submit" value="Confirm Booking" />
+}

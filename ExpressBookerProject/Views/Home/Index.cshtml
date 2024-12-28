@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="weather-info" class="mt-5"></div>
+
+<div class="jumbotron">
+    <h1>Welcome to ExpressBooker!</h1>
+    <img src="~/images/busbooker.png" alt="ExpressBooker Banner" class="img-responsive" style="display: block; margin: 0 auto; width: 50%; height: auto;" />
+
+    <p class="lead">Your one-stop solution for easy and convenient bus ticket bookings. Start your journey with us today!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Wide Network</h2>
+        <p>Access a vast network of bus operators and routes across the country. Find the best route for your travel needs.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Easy Booking</h2>
+        <p>Enjoy a user-friendly interface for quick and hassle-free bookings. Your next trip is just a few clicks away!</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Secure Payments</h2>
+        <p>Multiple payment options with top-notch security. Your transactions are safe with us.</p>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        // Function to fetch weather information
+        function fetchWeather() {
+            const apiKey = '18e3961f71aba08ae1eb431aa20f126a'; // Replace with your API key
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Karachi,PK&appid=${apiKey}&units=metric`; // Karachi, Pakistan
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const weather = data.weather[0].description;
+                    const temperature = data.main.temp;
+                    const humidity = data.main.humidity;
+                    const windSpeed = data.wind.speed;
+                    const city = data.name;
+                    document.getElementById('weather-info').innerHTML = `
+                                <h2>Weather in ${city}</h2>
+                                <p><strong>Description:</strong> ${weather}</p>
+                                <p><strong>Temperature:</strong> ${temperature}°C</p>
+                                <p><strong>Humidity:</strong> ${humidity}%</p>
+                                <p><strong>Wind Speed:</strong> ${windSpeed} m/s</p>
+                            `;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    document.getElementById('weather-info').innerHTML = '<p>Error fetching weather data. Please try again later.</p>';
+                });
+        }
+
+        // Call fetchWeather function when the page loads
+        window.onload = fetchWeather;
+    </script>
+}
