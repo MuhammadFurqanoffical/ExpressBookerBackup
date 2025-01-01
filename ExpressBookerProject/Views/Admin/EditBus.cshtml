@@ -1,23 +1,23 @@
 ﻿@model ExpressBookerProject.Models.bus
 
 @{
-    ViewBag.Title = "EditBus";
+    ViewBag.Title = "Edit Bus";
 }
 @Html.Raw(TempData["Message"])
-<h2>EditBus</h2>
+<h2>Edit Bus</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>bus</h4>
+        <h4>Bus</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.busid)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.busnumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.busnumber, "Bus Number", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.busnumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.busnumber, "", new { @class = "text-danger" })
@@ -25,9 +25,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.capacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.capacity, "Capacity", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.capacity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.capacity,
+                       new SelectList(Enumerable.Range(20, 11).Select(i => new SelectListItem
+                       {
+                           Value = i.ToString(),
+                           Text = i.ToString()
+                       }), "Value", "Text", @Model.capacity),
+                       "Select Capacity",
+                       new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.capacity, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.driverid, "Driver", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.driverid, ViewBag.DriverList as SelectList, "Select Driver", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.driverid, (IEnumerable<SelectListItem>)ViewBag.DriverList, "Select Driver", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.driverid, "", new { @class = "text-danger" })
             </div>
         </div>

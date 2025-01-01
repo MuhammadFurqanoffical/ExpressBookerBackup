@@ -14,19 +14,20 @@ namespace ExpressBookerProject.Services
             _context = new expressbookerEntities();
         }
 
-        public user AuthenticateUser(string username, string password)
+        public virtual user AuthenticateUser(string username, string password)
         {
             return _context.users.FirstOrDefault(u => u.username == username && u.password == password);
         }
 
-        public decimal CalculatePrice(busschedule schedule)
+        public virtual decimal CalculatePrice(busschedule schedule)
         {
             decimal pricePerKilometer = 10.0m;
             decimal distance = schedule.route.distance;
             return distance * pricePerKilometer;
         }
 
-        public List<busschedule> GetBusSchedules()
+        // Made this method virtual so it can be mocked
+        public virtual List<busschedule> GetBusSchedules()
         {
             var schedules = _context.busschedules.Include("route").ToList();
             foreach (var schedule in schedules)
@@ -36,7 +37,8 @@ namespace ExpressBookerProject.Services
             return schedules;
         }
 
-        public busschedule GetBusSchedule(int scheduleId)
+        // Made this method virtual so it can be mocked
+        public virtual busschedule GetBusSchedule(int scheduleId)
         {
             return _context.busschedules
                 .Include("bus")
@@ -44,7 +46,8 @@ namespace ExpressBookerProject.Services
                 .FirstOrDefault(s => s.scheduleid == scheduleId);
         }
 
-        public int GetAvailableSeats(busschedule schedule)
+        // Made this method virtual so it can be mocked
+        public virtual int GetAvailableSeats(busschedule schedule)
         {
             int totalBookedSeats = _context.bookings.Count(b => b.busid == schedule.busid);
             return schedule.bus.capacity - totalBookedSeats;

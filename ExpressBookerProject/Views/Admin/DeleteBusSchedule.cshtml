@@ -1,48 +1,54 @@
-﻿@model ExpressBookerProject.Models.bus
+﻿@model ExpressBookerProject.Models.busschedule
 
 @{
-    ViewBag.Title = "Delete Bus";
+    ViewBag.Title = "Delete Bus Schedule";
 }
 @Html.Raw(TempData["Message"])
-<h2>Delete Bus</h2>
 
-<h3>Are You Sure You Want to Delete This Bus?</h3>
+<h2>Delete Bus Schedule</h2>
+
+<h3>Are You Sure You Want to Delete This Bus Schedule?</h3>
+
 <div>
-    <h4>Bus Details</h4>
-    <hr />
+
     <dl class="dl-horizontal">
-        <dt>
-            @Html.LabelFor(model => model.busnumber, "Bus Number")
-        </dt>
 
+        <dt>
+            @Html.LabelFor(model => model.departuretime, "Departure Time")
+        </dt>
         <dd>
-            @Html.DisplayFor(model => model.busnumber)
+            @Html.DisplayFor(model => model.departuretime)
         </dd>
 
         <dt>
-            @Html.LabelFor(model => model.capacity, "Capacity")
+            @Html.LabelFor(model => model.arrivaltime, "Arrival Time")
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.capacity)
+            @Html.DisplayFor(model => model.arrivaltime)
         </dd>
 
         <dt>
-            @Html.LabelFor(model => model.driver.name, "Driver Name")
+            @Html.LabelFor(model => model.bus.busnumber, "Bus Number")
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.driver.name)
+            @Html.DisplayFor(model => model.bus.busnumber)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.route.source, "Source")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.route.source)
         </dd>
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("DeleteBusSchedule", "Admin", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete Bus" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to Bus List", "ViewBus")
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "ViewBusSchedule")
         </div>
     }
 </div>

@@ -20,50 +20,47 @@ namespace ExpressBookerProject.Controllers
         {
             _facade = new BookingFacade();
         }
+        public UserController(BookingFacade facade)
+        {
+            _facade = facade;
+        }
+
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            DisableCaching();
+            base.OnActionExecuting(filterContext);
+        }
+
+        private void DisableCaching()
         {
             Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-            base.OnActionExecuting(filterContext);
         }
 
-        [AllowAnonymous] // Allow access to the login page without authentication
-        public ActionResult Login()
-        {
-            return View();
-        }
+        [AllowAnonymous]
+        public ActionResult Login() => View();
 
         [HttpPost]
-        [AllowAnonymous] // Allow access to login POST without authentication
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(user model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+
+            var user = _facade.AuthenticateUser(model.username, model.password);
+
+            if (user == null || user.roleid == 1)
             {
-                var user = _facade.AuthenticateUser(model.username, model.password);
-
-                if (user != null)
-                {
-                    if (user.roleid == 1) // Prevent admin login here
-                    {
-                        ViewBag.ErrorMessage = "Wrong credentials";
-                        return View(model);
-                    }
-
-                    // Store user ID in session
-                    Session["UserID"] = user.userid;
-                    return RedirectToAction("BusSchedule", "User");
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Invalid username or password.";
-                    return View(model);
-                }
+                ViewBag.ErrorMessage = "Invalid username or password.";
+                return View(model);
             }
-            return View(model);
+
+            Session["UserID"] = user.userid;
+            return RedirectToAction("BusSchedule");
         }
+
         public ActionResult BusSchedule()
         {
             var schedules = _facade.GetBusSchedules();
@@ -73,10 +70,7 @@ namespace ExpressBookerProject.Controllers
         public ActionResult BookSeats(int id)
         {
             var schedule = _facade.GetBusSchedule(id);
-            if (schedule == null)
-            {
-                return HttpNotFound();
-            }
+            if (schedule == null) return HttpNotFound();
 
             ViewBag.AvailableSeats = _facade.GetAvailableSeats(schedule);
             return View(schedule);
@@ -91,7 +85,7 @@ namespace ExpressBookerProject.Controllers
                 return HttpNotFound();
             }
 
-            var availableSeats = _facade.GetAvailableSeats(schedule);
+            int availableSeats = _facade.GetAvailableSeats(schedule);
             if (seats > availableSeats)
             {
                 ModelState.AddModelError("", "Not enough available seats.");
@@ -99,7 +93,7 @@ namespace ExpressBookerProject.Controllers
                 return View(schedule);
             }
 
-            var totalPrice = _facade.CalculatePrice(schedule) * seats;
+            decimal totalPrice = _facade.CalculatePrice(schedule) * seats;
 
             ViewBag.ScheduleId = schedule.scheduleid;
             ViewBag.BusNumber = schedule.bus.busnumber;
@@ -113,17 +107,32 @@ namespace ExpressBookerProject.Controllers
             return View("ConfirmBooking");
         }
 
+    private void SetModelStateError(string message, int availableSeats, busschedule schedule)
+        {
+            ModelState.AddModelError("", message);
+            ViewBag.AvailableSeats = availableSeats;
+        }
+
+        private void SetConfirmBookingViewData(busschedule schedule, int seats, decimal totalPrice)
+        {
+            ViewBag.ScheduleId = schedule.scheduleid;
+            ViewBag.BusNumber = schedule.bus.busnumber;
+            ViewBag.DepartureTime = schedule.departuretime;
+            ViewBag.ArrivalTime = schedule.arrivaltime;
+            ViewBag.Source = schedule.route.source;
+            ViewBag.Destination = schedule.route.destination;
+            ViewBag.NumSeats = seats;
+            ViewBag.TotalPrice = totalPrice;
+        }
+
         [HttpPost]
         public ActionResult ConfirmBooking(int scheduleId, int numSeats)
         {
-            int userId = (int)Session["UserID"]; // Retrieve the actual user ID from session
+            int userId = GetCurrentUserId();
+            if (userId == 0) return RedirectToAction("Login");
 
             var success = _facade.BookSeats(userId, scheduleId, numSeats, out var bookedSeatNumbers);
-            if (!success)
-            {
-                ModelState.AddModelError("", "Not enough available seats.");
-                return View("Error");
-            }
+            if (!success) return View("Error");
 
             return RedirectToAction("Payment", new { scheduleId, numSeats, bookedSeatNumbers });
         }
@@ -143,31 +152,29 @@ namespace ExpressBookerProject.Controllers
                 ModelState.AddModelError("", "Please select a valid payment method.");
                 ViewBag.ScheduleId = scheduleId;
                 ViewBag.NumSeats = numSeats;
-                return View(); // Reload the payment page
+                return View();
             }
 
-            int userId = (int)Session["UserID"]; // Retrieve the actual user ID from session
+            int userId = GetCurrentUserId();
+            if (userId == 0) return RedirectToAction("Login");
 
-            // Simulate processing payment
             var success = _facade.ProcessPayment(userId, scheduleId, numSeats, paymentMethod);
-            if (!success)
-            {
-                ModelState.AddModelError("", "Payment processing failed. Try again.");
-                return View("Error");
-            }
+            if (!success) return View("Error");
 
             return RedirectToAction("BookingSuccess");
         }
 
-        public ActionResult BookingSuccess()
-        {
-            return View();
-        }
+        public ActionResult BookingSuccess() => View();
 
         public ActionResult Logout()
         {
-            Session["UserID"] = null; // Clear the session
-            return RedirectToAction("Login", "User");
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        private int GetCurrentUserId()
+        {
+            return Session["UserID"] is int userId ? userId : 0;
         }
     }
 }

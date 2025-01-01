@@ -8,8 +8,7 @@
 
 <h3>Are You Sure You Want to Delete This Driver?</h3>
 <div>
-    <h4>Driver Details</h4>
-    <hr />
+   
     <dl class="dl-horizontal">
         <dt>
             @Html.LabelFor(model => model.name, "Name")
@@ -41,8 +40,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete Driver" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to Driver List", "ViewDriver")
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "ViewDriver")
         </div>
     }
 </div>

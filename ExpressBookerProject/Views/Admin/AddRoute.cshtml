@@ -40,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.distance, "Distance (In KM)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.distance, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                @Html.EditorFor(model => model.distance, new { htmlAttributes = new { @class = "form-control", min = "1" } })
                 @Html.ValidationMessageFor(model => model.distance, "", new { @class = "text-danger" })
             </div>
         </div>
